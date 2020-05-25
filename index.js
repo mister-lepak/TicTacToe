@@ -2,6 +2,34 @@ const gridSize = 3;
 let user = 1;
 let pointA = 0;
 let pointB = 0;
+let winA = 0;
+let winB = 0;
+let scoreCheck = 0;
+
+const playerScores = () => {
+  const scoreBox = document.createElement('div');
+  scoreBox.classList.add('score');
+  scoreBox.innerHTML = `
+    <h2>
+      <div id="scoreA">
+      PlayerA
+      <br>${winA}</br>
+      </div>
+      <div id="scoreB">
+      PlayerB
+      <br>${winB}</br>
+      </div>
+    </h2>
+    `;
+  document.querySelector('#main').appendChild(scoreBox);
+};
+
+const cleanPlayerScores = () => {
+  const score = document.querySelector('.score');
+  score.remove();
+};
+
+playerScores();
 
 
 // Define and Create grid boxes
@@ -18,13 +46,13 @@ for ( i=0 ; i<gridSize ; i++ ){
       if(horizontal.classList[1]){}
       else {
         if (user == 1) {
-        horizontal.classList.add('activeA');
-        user--;
-        pointA++;
+          horizontal.classList.add('activeA');
+          user--;
+          pointA++;
         } else {
-        horizontal.classList.add('activeB');
-        user++;
-        pointB++;
+          horizontal.classList.add('activeB');
+          user++;
+          pointB++;
         }
       }
     });
@@ -32,7 +60,7 @@ for ( i=0 ; i<gridSize ; i++ ){
   gridBox.append(vertical);
 };
 
-const playerWins = (player) => {
+const playerUltiWin = (player) => {
   document.querySelector('#notice').innerHTML = `
     <div class="notice">
       <div>
@@ -42,13 +70,58 @@ const playerWins = (player) => {
         <p>Rematch?</P>
       </div>
       <div>
+        <button id="rematch">Yes, Lets Rematch!</button>
+      </div>
+    </div>`;
+  document.querySelector('#rematch').addEventListener('click', () => {
+    const boxes = document.querySelectorAll('.horizontalBox');
+    boxes.forEach(box => {
+      box.classList.remove('activeA');
+      box.classList.remove('activeB');
+      document.querySelector('#notice').innerHTML = '';
+      pointA = 0;
+      pointB = 0;
+      winA = 0;
+      winB = 0;
+      cleanPlayerScores();
+      playerScores();
+      document.querySelector('#grid').classList.remove('end');
+    });
+  });
+
+  document.querySelector('#grid').classList.add('end');
+}
+
+const playerWins = (player) => {
+  document.querySelector('#notice').innerHTML = `
+    <div class="notice">
+      <div>
+        <p>Player ${player} is the winner!!</p>
+      </div>
+      <div>
+        <p>1st to score 3 points wins! Continue?</P>
+      </div>
+      <div>
         <button id="rematch">Yes, Lets Play Again!</button>
       </div>
     </div>`;
   document.querySelector('#rematch').addEventListener('click', () => {
-    location.reload();
+    const boxes = document.querySelectorAll('.horizontalBox');
+    boxes.forEach(box => {
+      box.classList.remove('activeA');
+      box.classList.remove('activeB');
+      document.querySelector('#notice').innerHTML = '';
+      pointA = 0;
+      pointB = 0;
+      document.querySelector('#grid').classList.remove('end');
+    });
   });
+  if (`win${player}` === "winA") winA++;
+  else if(`win${player}` === "winB") winB++;
+  cleanPlayerScores();
+  playerScores();
   document.querySelector('#grid').classList.add('end');
+  scoreCheck = 1;
 }
 
 const playerDraw = () => {
@@ -58,14 +131,22 @@ const playerDraw = () => {
       <p>The match is draw!</p>
     </div>
     <div>
-      <p>Rematch?</P>
+      <p>1st to score 3 points wins! Continue?</P>
     </div>
     <div>
       <button id="rematch">Yes, Lets Play Again!</button>
     </div>
   </div>`;
   document.querySelector('#rematch').addEventListener('click', () => {
-    location.reload();
+    const boxes = document.querySelectorAll('.horizontalBox');
+    boxes.forEach(box => {
+      box.classList.remove('activeA');
+      box.classList.remove('activeB');
+      document.querySelector('#notice').innerHTML = '';
+      pointA = 0;
+      pointB = 0;
+      document.querySelector('#grid').classList.remove('end');
+    });
   });
   document.querySelector('#grid').classList.add('end');
 };
@@ -82,8 +163,10 @@ document.body.addEventListener('click', () => {
       if(boxes[i+(j*gridSize)].classList[1] === 'activeA' ) pointAX++;
       else if(boxes[i+(j*gridSize)].classList[1] === 'activeB') pointBX++;
     }
-    if (pointAX === gridSize) playerWins('A');
-    else if (pointBX === gridSize) playerWins('B');
+    if(scoreCheck === 0){
+      if (pointAX === gridSize) playerWins('A');
+      else if (pointBX === gridSize) playerWins('B');
+    }
   }
   // Vertical checks
   for (i = 0; i <gridSize; i++) {
@@ -93,8 +176,10 @@ document.body.addEventListener('click', () => {
       if (boxes[(i*gridSize) + j].classList[1] === 'activeA') pointAY++;
       else if(boxes[(i*gridSize) + j].classList[1] === 'activeB') pointBY++;
     }
-    if (pointAY === gridSize) playerWins('A');
-    else if(pointBY === gridSize) playerWins('B');
+    if(scoreCheck === 0){
+      if (pointAY === gridSize) playerWins('A');
+      else if(pointBY === gridSize) playerWins('B');
+    }
   }
   // Diagonal checks
   for (i = 0; i<gridSize; i++) {
@@ -110,9 +195,15 @@ document.body.addEventListener('click', () => {
         else if(boxes[i + (j*gridSize) -j].classList[1] === 'activeB') pointBD++;
       }
     }
-    if (pointAD === gridSize) playerWins('A');
-    else if(pointBD === gridSize) playerWins('B');
+    if(scoreCheck ===0) {
+      if (pointAD === gridSize) playerWins('A');
+      else if(pointBD === gridSize) playerWins('B');
+    }
   }
-  if(pointA + pointB === gridSize**2) {playerDraw()}
-
+  if(scoreCheck === 0) {
+    if(pointA + pointB === gridSize**2) {playerDraw()};
+  }
+  if(winA === 3) playerUltiWin('A');
+  else if(winB === 3) playerUltiWin('B');
+  scoreCheck=0;
 });
