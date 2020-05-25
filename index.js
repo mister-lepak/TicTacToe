@@ -1,5 +1,5 @@
 const gridSize = 3;
-let user = 0;
+let user = 1;
 
 
 // Define and Create grid boxes
