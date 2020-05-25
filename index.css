@@ -1,12 +1,12 @@
 .verticalBox {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   float: left;
 }
 .horizontalBox {
   border: 2px solid;
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   float: left;
 }
 .activeA {
@@ -19,12 +19,13 @@
 
 p {
   color: white;
-  position: absolute;
+  position: relative;
   font-size: 30px;
   padding: 0;
-  margin: 0;
+  margin-left: 0%;
   top: 30%;
-  left: 20%;
+  left: 0%;
+  text-align: center;
 }
 
 #grid {
@@ -36,7 +37,7 @@ p {
 h1{
 position: relative;
 margin: auto;
-left: 47%;
+left: 40%;
 }
 
 .end {
@@ -48,7 +49,12 @@ left: 47%;
   top: 50%;
   left: 47%;
   width: 300px;
-  height: 150px;
+  height: 200px;
   background-color: navy;
   vertical-align: middle;
+}
+
+button {
+  position: relative;
+  margin-left: 30%;
 }

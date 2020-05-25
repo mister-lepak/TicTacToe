@@ -1,5 +1,7 @@
 const gridSize = 3;
 let user = 1;
+let pointA = 0;
+let pointB = 0;
 
 
 // Define and Create grid boxes
@@ -18,9 +20,11 @@ for ( i=0 ; i<gridSize ; i++ ){
         if (user == 1) {
         horizontal.classList.add('activeA');
         user--;
+        pointA++;
         } else {
         horizontal.classList.add('activeB');
         user++;
+        pointB++;
         }
       }
     });
@@ -29,14 +33,42 @@ for ( i=0 ; i<gridSize ; i++ ){
 };
 
 const playerWins = (player) => {
-
   document.querySelector('#notice').innerHTML = `
     <div class="notice">
-      <p>Player ${player} Wins!!</p>
+      <div>
+        <p>Player ${player} Wins!!</p>
+      </div>
+      <div>
+        <p>Rematch?</P>
+      </div>
+      <div>
+        <button id="rematch">Yes, Lets Play Again!</button>
+      </div>
     </div>`;
-  document.body.classList.add('end');
+  document.querySelector('#rematch').addEventListener('click', () => {
+    location.reload();
+  });
+  document.querySelector('#grid').classList.add('end');
 }
 
+const playerDraw = () => {
+  document.querySelector('#notice').innerHTML = `
+  <div class="notice">
+    <div>
+      <p>The match is draw!</p>
+    </div>
+    <div>
+      <p>Rematch?</P>
+    </div>
+    <div>
+      <button id="rematch">Yes, Lets Play Again!</button>
+    </div>
+  </div>`;
+  document.querySelector('#rematch').addEventListener('click', () => {
+    location.reload();
+  });
+  document.querySelector('#grid').classList.add('end');
+};
 
 // Perform validation on every clicks
 document.body.addEventListener('click', () => {
@@ -81,6 +113,6 @@ document.body.addEventListener('click', () => {
     if (pointAD === gridSize) playerWins('A');
     else if(pointBD === gridSize) playerWins('B');
   }
-
+  if(pointA + pointB === gridSize**2) {playerDraw()}
 
 });
