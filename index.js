@@ -13,14 +13,16 @@ for ( i=0 ; i<gridSize ; i++ ){
     vertical.append(horizontal);
 
     horizontal.addEventListener('click', ()=> {
-      if (user == 1) {
+      if(horizontal.classList[1]){}
+      else {
+        if (user == 1) {
         horizontal.classList.add('activeA');
         user--;
-      } else {
+        } else {
         horizontal.classList.add('activeB');
         user++;
+        }
       }
-
     });
   };
   gridBox.append(vertical);
