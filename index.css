@@ -1,12 +1,12 @@
 .verticalBox {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   float: left;
 }
 .horizontalBox {
   border: 2px solid;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   float: left;
 }
 .activeA {
@@ -67,5 +67,5 @@ button {
 #scoreB{
   position: relative;
   float: left;
-  left: 80%;
+  left: 70%;
 }
