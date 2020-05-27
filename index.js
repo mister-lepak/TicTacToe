@@ -5,6 +5,9 @@ let pointB = 0;
 let winA = 0;
 let winB = 0;
 let scoreCheck = 0;
+const grids = Array(gridSize)
+                .fill(0)
+                .map(() => {return Array(gridSize).fill(0)});
 
 // Render Player Scores
 const playerScores = () => {
@@ -34,6 +37,7 @@ const cleanPlayerScores = () => {
 // Define and Create grid boxes
 const renderGrid = () => {
   const gridBox = document.querySelector('#grid');
+  gridBox.innerHTML = '';
   for ( i=0 ; i<gridSize ; i++ ){
     const vertical = document.createElement('div');
     vertical.classList.add('verticalBox');
@@ -45,7 +49,10 @@ const renderGrid = () => {
       horizontal.style.width = `${window.innerWidth*(1/(gridSize**2))}px`;
       horizontal.style.height = `${window.innerWidth*(1/(gridSize**2))}px`;
       vertical.append(horizontal);
-
+      const seqi = i;
+      const seqj = j;
+      if(grids[seqi][seqj] === 1) horizontal.classList.add('activeA');
+      else if(grids[seqi][seqj] === 2) horizontal.classList.add('activeB');
       horizontal.addEventListener('click', ()=> {
         if(horizontal.classList[1]){}
         else {
@@ -53,16 +60,27 @@ const renderGrid = () => {
             horizontal.classList.add('activeA');
             user--;
             pointA++;
+            grids[seqi][seqj] = 1;
           } else {
             horizontal.classList.add('activeB');
             user++;
             pointB++;
+            grids[seqi][seqj] = 2;
           }
         }
       });
     };
     gridBox.append(vertical);
   };
+};
+
+// Cleanup grids
+const gridsReset = () => {
+  for(i = 0; i<gridSize; i++){
+    for (j=0; j<gridSize; j++){
+      grids[i][j] = 0;
+    }
+  }
 };
 
 // Function definition when the one of the player has won the game
@@ -89,6 +107,7 @@ const playerUltiWin = (player) => {
       pointB = 0;
       winA = 0;
       winB = 0;
+      gridsReset();
       cleanPlayerScores();
       playerScores();
       document.querySelector('.parent').classList.remove('end');
@@ -120,6 +139,7 @@ const playerWins = (player) => {
       document.querySelector('#notice').innerHTML = '';
       pointA = 0;
       pointB = 0;
+      gridsReset();
       document.querySelector('.parent').classList.remove('end');
     });
   });
@@ -153,6 +173,7 @@ const playerDraw = () => {
       document.querySelector('#notice').innerHTML = '';
       pointA = 0;
       pointB = 0;
+      gridsReset();
       document.querySelector('.parent').classList.remove('end');
     });
   });
@@ -219,3 +240,7 @@ document.body.addEventListener('click', () => {
 // Initialization
 playerScores();
 renderGrid();
+
+window.addEventListener('resize', () => {
+  renderGrid();
+});
