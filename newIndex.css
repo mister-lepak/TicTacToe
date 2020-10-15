@@ -1,0 +1,104 @@
+.verticalBox {
+  /* width: 50px;
+  height: 50px; */
+  float: left;
+}
+.horizontalBox {
+  border: 2px solid;
+  /* width: 50px;
+  height: 50px; */
+  float: left;
+}
+.activeA {
+  background-image: url("X.png");
+  background-size: cover;
+}
+.activeB {
+  background-image: url("O.png");
+  background-size: cover;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 0.2fr 0.8fr;
+  grid-template-areas:
+  ". main ."
+  "playerA grid playerB"
+  ;
+  justify-items: center;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+p {
+  color: white;
+  /* position: relative; */
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 10px;
+}
+
+#grid {
+  grid-area: grid;
+}
+
+#main{
+grid-area: main;
+margin-top: 10px;
+}
+
+#main h1{
+  margin-top: 10px;
+}
+
+.end {
+  pointer-events: none;
+}
+
+#notice {
+  grid-area: grid;
+  z-index: 1;
+  text-align: center;
+}
+
+.notice {
+  /* position: absolute;
+  top: 50%;
+  left: 47%; */
+  width: 300px;
+  height: auto;
+  padding: 10px;
+  background-color: black;
+  vertical-align: middle;
+}
+
+button {
+  padding: 1rem;
+  align-self: center;
+  pointer-events: auto;
+}
+
+#scoreA{
+  grid-area: playerA;
+  color: black;
+  /* width: 80px; */
+}
+#scoreB{
+  grid-area: playerB;
+  color: black;
+  /* width: 80px; */
+}
+
+h2 {
+  height: 30px;
+}
+
+h3 {
+  margin-top: 50px;
+  font-size: 2rem;
+}
+
+body{
+  background-color: #9BC848;
+}
