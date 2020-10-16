@@ -360,7 +360,7 @@ let body = document.querySelector('body');
 let playButton = document.querySelector('#playButton');
 let rotateNote = document.querySelector('#rotate');
 
-rotateNote.style.display = "none";
+  rotateNote.style.display = "none";
 
 playButton.addEventListener("click", () => {
   $('.ui.mini.modal').modal('show');
@@ -434,7 +434,9 @@ startButton.addEventListener("click", () => {
       gameBoard.renderGrid(playerA, playerB);
     });
 
-    rotateNote.style.display = "grid";
+    if(window.innerHeight > window.innerWidth){
+      rotateNote.style.display = "grid";
+    }
   }
 
 
