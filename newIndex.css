@@ -21,9 +21,10 @@
 .parent {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 0.2fr 0.8fr;
+  grid-template-rows: 0.2fr 0.1fr 0.8fr;
   grid-template-areas:
   ". main ."
+  ". play ."
   "playerA grid playerB"
   ;
   justify-items: center;
@@ -41,6 +42,10 @@ p {
 
 #grid {
   grid-area: grid;
+}
+
+#play{
+  grid-area: play;
 }
 
 #main{
@@ -102,3 +107,40 @@ h3 {
 body{
   background-color: #9BC848;
 }
+
+@media only screen and (orientation:portrait){
+
+  body {
+
+   height: 100vw;
+   width: 100vw;
+
+   -webkit-transform: rotate(90deg);
+
+   -moz-transform: rotate(90deg);
+
+   -o-transform: rotate(90deg);
+
+   -ms-transform: rotate(90deg);
+
+   transform: rotate(90deg);
+
+  }
+
+}
+
+@media only screen and (orientation:landscape){
+
+  body {
+
+  -webkit-transform: rotate(0deg);
+
+  -moz-transform: rotate(0deg);
+
+  -o-transform: rotate(0deg);
+
+  -ms-transform: rotate(0deg);
+
+  transform: rotate(0deg);
+
+   }
