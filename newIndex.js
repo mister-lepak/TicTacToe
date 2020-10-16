@@ -358,6 +358,9 @@ const displayController = (() => {
 // Initialization
 let body = document.querySelector('body');
 let playButton = document.querySelector('#playButton');
+let rotateNote = document.querySelector('#rotate');
+
+rotateNote.style.display = "none";
 
 playButton.addEventListener("click", () => {
   $('.ui.mini.modal').modal('show');
@@ -365,8 +368,6 @@ playButton.addEventListener("click", () => {
     $('.ui.modal').modal('hide');
   });
 });
-
-
 
 ai1.addEventListener("click", () => {
   if (ai1.checked){
@@ -396,7 +397,7 @@ ai2.addEventListener("click", () => {
 startButton.addEventListener("click", () => {
   playButton.remove();
   let proceed = false;
-  if (playerX.value === playerO.value) {
+  if ((playerX.value === playerO.value) || (playerX.value === "") || (playerO.value === "")) {
     playerXField.classList.add('error');
     playerOField.classList.add('error');
   }
@@ -432,6 +433,8 @@ startButton.addEventListener("click", () => {
     window.addEventListener('resize', () => {
       gameBoard.renderGrid(playerA, playerB);
     });
+
+    rotateNote.style.display = "grid";
   }
 
 
